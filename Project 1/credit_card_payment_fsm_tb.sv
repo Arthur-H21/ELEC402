@@ -1,0 +1,139 @@
+/* ELEC 402 Project 1 - System Verilog FSM Project 
+ * Name: Arthur Hsueh
+ * ID: 21582168
+ * Description: This testbench is for the FSM
+*/
+
+module credit_card_payment_fsm_tb ();
+    logic clk_tb, reset_tb;
+    logic process_init_tb,
+        visa_choice_in_tb,
+        mastercard_choice_in_tb,
+        amex_choice_in_tb,
+        pymt_amt_conf_tb,
+        pymt_amt_denied_tb,
+        pin_fail_tb,
+        pin_success_tb,
+        transaction_fail_tb,
+        transaction_success_tb,
+        light_bit_tb,
+        pymt_amt_print_tb,
+        pin_process_init_tb,
+        pymt_process_init_tb,
+        process_abort_tb;
+    logic [1:0] card_choice_tb;
+
+    // module dut instantiation
+    credit_card_payment_fsm dut(
+        .clk                    (clk_tb),
+        .reset                  (reset_tb),
+        .process_init           (process_init_tb),
+        .visa_choice_in         (visa_choice_in_tb),
+        .mastercard_choice_in   (mastercard_choice_in_tb),
+        .amex_choice_in         (amex_choice_in_tb),
+        .pymt_amt_conf          (pymt_amt_conf_tb),
+        .pymt_amt_denied        (pymt_amt_denied_tb),
+        .pin_fail               (pin_fail_tb),
+        .pin_success            (pin_success_tb),
+        .transaction_fail       (transaction_fail_tb),
+        .transaction_success    (transaction_success_tb),
+        .light_bit              (light_bit_tb),
+        .card_choice            (card_choice_tb),
+        .pymt_amt_print         (pymt_amt_print_tb),
+        .pin_process_init       (pin_process_init_tb),
+        .pymt_process_init      (pymt_process_init_tb),
+        .process_abort          (process_abort_tb)
+    );
+
+    // clock generation
+    always begin
+        clk_tb = 1; #5;
+        clk_tb = 0; #5;
+    end
+
+    initial begin
+        reset_tb = 1; #10;          // initiate first 'idle' state and check for state wait
+        reset_tb = 0; #10;
+
+        /*
+        FIRST ITERATION OF FSM
+        */
+        process_init_tb = 1; #10; // state <= init_process
+        process_init_tb = 0; #10; // state <= wait_credit_choice state
+        assert (light_bit_tb === 1'b1) else $error("light_bit assert fail");
+        mastercard_choice_in_tb = 1; #10; // state <= choice_mastercard
+        assert (card_choice_tb === 2'b10) else $error ("Mastercard_choice value failed");// check output 
+        #10; // state <= init_amount_confirm
+        assert (pymt_amt_print_tb === 1'b1) else $error ("payment_amt_print value fail should be 1'b1");
+        #10; // state <= wait_amount confirm
+        pymt_amt_conf_tb = 1; #10; // state <= init_pin_process
+        assert (pin_process_init_tb === 1'b1) else $error ("pin_process_init should be 1'b1");
+        pymt_amt_conf_tb = 0;
+        #10; // state <= wait_pin_process
+        pin_fail_tb = 1'b1;
+        #10; // state <= wait_pin_process
+        assert (dut.fail_counter === 2'b01) else $error("fail_counter should be 2'b01");
+        pin_fail_tb = 1'b0;
+        #10;
+        pin_fail_tb = 1'b1;
+        #10;
+        assert (dut.fail_counter === 2'b10) else $error("fail_counter should be 2'b10");
+        pin_fail_tb = 1'b0;
+        #10; // state <= wait_pin_process
+        pin_success_tb = 1'b1;
+        #10; // state <= init_payment_handle
+        assert (pymt_process_init_tb === 1'b1) else $error ("pymt_process_init should be 1'b1");
+        pin_success_tb = 1'b0;
+        #10; // state <= wait_payment_handle
+        transaction_success_tb = 1'b1;
+        #10; // state <= payment_success
+        transaction_success_tb = 1'b0;
+        #10; // state <= idle;
+        assert (dut.fail_counter === 2'b00) else $error("fail_counter should be 2'b00");
+
+        /*
+        SECOND ITERATION OF FSM
+        */
+        process_init_tb = 1; #10; // state <= init_process
+        process_init_tb = 0; #10; // state <= wait_credit_choice state
+        assert (light_bit_tb === 1'b1) else $error("light_bit assert fail");
+        mastercard_choice_in_tb = 1; #10; // state <= choice_mastercard
+        assert (card_choice_tb === 2'b10) else $error ("Mastercard_choice value failed");// check output 
+        #10; // state <= init_amount_confirm
+        assert (pymt_amt_print_tb === 1'b1) else $error ("payment_amt_print value fail should be 1'b1");
+        #10; // state <= wait_amount confirm
+        pymt_amt_denied_tb = 1; #10; // state <= payment_fail
+        assert (pin_process_init_tb === 1'b0) else $error ("pin_process_init should be 1'b0");
+        #10; // state <= idle
+        assert (dut.state === 12'b000000000000) else $error ("state should be idle, beit encoded 12'b0");
+
+        /*
+        THIRD ITERATION OF FSM
+        */
+        process_init_tb = 1; #10; // state <= init_process
+        process_init_tb = 0; #10; // state <= wait_credit_choice state
+        assert (light_bit_tb === 1'b1) else $error("light_bit assert fail");
+        mastercard_choice_in_tb = 1; #10; // state <= choice_mastercard
+        assert (card_choice_tb === 2'b10) else $error ("Mastercard_choice value failed");// check output 
+        #10; // state <= init_amount_confirm
+        assert (pymt_amt_print_tb === 1'b1) else $error ("payment_amt_print value fail should be 1'b1");
+        #10; // state <= wait_amount confirm
+        pymt_amt_conf_tb = 1; #10; // state <= init_pin_process
+        assert (pin_process_init_tb === 1'b1) else $error ("pin_process_init should be 1'b1");
+        pymt_amt_conf_tb = 0;
+        #10; // state <= wait_pin_process
+        pin_success_tb = 1'b1;
+        #10; // state <= init_payment_handle
+        assert (pymt_process_init_tb === 1'b1) else $error ("pymt_process_init should be 1'b1");
+        pin_success_tb = 1'b0;
+        #10 // state <= wait_payment_handle;
+        transaction_fail_tb = 1'b1;
+        #10; // state <= payment_fail
+        assert (process_abort_tb === 1'b1) else $error("process_abort should be 1'b1");
+        #10; // state <= idle;
+        assert (dut.state === 12'b000000000000) else $error ("state should be idle, beit encoded 12'b0");
+        $stop;
+
+    end
+    
+endmodule

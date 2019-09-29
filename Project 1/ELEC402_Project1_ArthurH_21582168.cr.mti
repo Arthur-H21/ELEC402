@@ -1,0 +1,8 @@
+{C:/Users/Arthur Hsueh/OneDrive/Year 4/ELEC 402/Project 1/credit_card_payment_fsm.sv} {1 {vlog -work work -sv -stats=none {C:/Users/Arthur Hsueh/OneDrive/Year 4/ELEC 402/Project 1/credit_card_payment_fsm.sv}
+Model Technology ModelSim ALTERA vlog 10.3c Compiler 2014.09 Sep 20 2014
+-- Compiling module credit_card_payment_fsm
+
+Top level modules:
+	credit_card_payment_fsm
+
+} {} {}}
