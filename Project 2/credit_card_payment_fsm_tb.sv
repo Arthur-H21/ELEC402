@@ -52,6 +52,16 @@ module credit_card_payment_fsm_tb ();
     end
 
     initial begin
+        process_init_tb = 0;
+        visa_choice_in_tb = 0;
+        mastercard_choice_in_tb = 0;
+        amex_choice_in_tb = 0;
+        pymt_amt_conf_tb = 0;
+        pymt_amt_denied_tb = 0;
+        pin_fail_tb = 0;
+        pin_success_tb = 0;
+        transaction_fail_tb = 0;
+        transaction_success_tb = 0;
         reset_tb = 1; #10;          // initiate first 'idle' state and check for state wait
         reset_tb = 0; #10;
 
