@@ -4,7 +4,6 @@
  * Description: This testbench is for the FSM
 */
 
-`timescale 1ns/1ps
 module credit_card_payment_fsm_tb ();
     logic clk_tb, reset_tb;
     logic process_init_tb,
@@ -100,12 +99,12 @@ module credit_card_payment_fsm_tb ();
         #10; // state <= payment_success
         transaction_success_tb = 1'b0;
         #10; // state <= idle;
+        assert (dut.fail_counter === 2'b00) else $error("fail_counter should be 2'b00");
 
         /*
         SECOND ITERATION OF FSM
         */
         process_init_tb = 1; #10; // state <= init_process
-        assert (dut.fail_counter === 2'b00) else $error("fail_counter should be 2'b00");
         process_init_tb = 0; #10; // state <= wait_credit_choice state
         assert (light_bit_tb === 1'b1) else $error("light_bit assert fail");
         mastercard_choice_in_tb = 1; #10; // state <= choice_mastercard

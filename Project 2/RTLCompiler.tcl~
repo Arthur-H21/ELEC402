@@ -62,7 +62,7 @@ report gates > ./files_out/${DESIGN}_gates.rpt
 report timing > ./files_out/${DESIGN}_timing.rpt
 report power > ./files_out/${DESIGN}_power.rpt
 #generate the verilog file with actual gates-> to be used in Encounter and ModelSim
-write_hdl -mapped > ./files_out/${DESIGN}_map.v
+write_hdl -mapped > ./files_out/${DESIGN}_map.sv
 #generate the constaraints file--> to be used in Encounter 
 write_sdc > ./files_out/${DESIGN}_map.sdc
 #generate the delays file--> to be used in ModelSimrc  
