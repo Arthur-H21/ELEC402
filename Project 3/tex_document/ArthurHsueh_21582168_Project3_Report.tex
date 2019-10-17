@@ -1,0 +1,99 @@
+\documentclass[12pt]{article}
+\usepackage[margin=0.9in]{geometry} 
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{float}
+\usepackage{scrextend}
+\usepackage{enumitem}
+
+%ignore \hbox issue
+\hfuzz=10000pt
+
+% title declarations
+\newcommand{\doctitle}{Project 3 - The MOS Transistor}
+\newcommand{\docsubtitle}{Noise Margins, VTC and Cadence Simulations}
+
+\renewcommand{\maketitle} {
+    \setlength{\parindent}{0pt}
+    \begin{center} \
+        % top spacing
+        \vspace*{1in}
+
+        % main title
+        \huge{\doctitle}\\
+        \Large{\docsubtitle}
+
+        % naming
+        \vspace*{0.2in}
+        \large{
+            Arthur Hsueh\\
+            21582168\\
+            UBC - ELEC 402
+        }
+
+
+    \end{center}
+}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\pagebreak
+
+\tableofcontents
+\thispagestyle{empty}
+
+\listoffigures
+\thispagestyle{empty}
+\pagebreak
+\setcounter{page}{1}
+
+\section{Designing widths of pull-down transistors}
+This problem asks to design the widths of the pull-down transistors such that $V_{OL}$ = 0.1 V. The general
+method is to equate $I_{L}$, the current from the load resistor/transsitor, to $I_{DI}$, the drain current of the 
+pull-down transistor. Because we are evalulating for the design requirement of $V_{OL}$, we take the input as
+$V_{in} = V_{DD}$, and thus the pull-down transistor will always be in the linear regime.
+
+\subsection{Calculations}
+\subsection*{Resistive load inverter}
+This is the circuit that contains the 10k$\Omega$ resistor. We begin by equating currents,
+\[ I_R = I_{D}(linear) \]
+\[\frac{V_{DD} - V_{OL}}{R_L} = \frac{W_N}{L_N} \mu_N C_{ox} ((V_{DD} - V_T) V_{OL} - \frac{V_{OL}^2}{2}) \]
+
+Values can be substituted in, (constants used will be taken from the Useful\_Formula.pdf document on canvas)
+
+\[\frac{1.2 - 0.1}{10000} = \frac{W_N}{0.1*10^{-7}}*270*1.6*10^{-6} *((1.2 - 0.4)*0.1 - \frac{0.1^2}{2}) \]
+Solving for $W_N$ yields
+\[ W_N = 3.395 * 10^{-8}m = 33.95 nm\]
+
+\subsection*{Saturated-enhancement-load inverter}
+This is the circuit that contains the pull-up NMOS transistor with 1.2V gate voltage. Here, the pull-up
+transistor is operating in the satuation regime ($V_{DS} > V_{GS} - V_T$). Again, we equate curents to solve,
+\[ I_{S pull-up}(saturation) = I_{D}(linear)\]
+\[\frac{W_L v_{sat}C_{ox}(V_{DD} - V_{OL} - V_{TL})^2}{(V_{DD} - V_{OL} - V_{TL}) + E_C L_L} = \frac{W_N}{L_N} \mu_N C_{ox} ((V_{DD} - V_T)V_{OL} - \frac{V_{OL}^2}{2}) \]
+Substituting values,
+\[\frac{0.1*10^{-5}* 8*10^6 *1.6 * 10^{-6}(1.2 - 0.1 - 0.4)^2}{(1.2 - 0.1 - 0.4) + 6*0.1*10^{-7}} = \frac{W_N}{0.1*10^{-7}}*270*1.6*10^{-6} *((1.2 - 0.4)*0.1 - \frac{0.1^2}{2})\]
+Solving for $W_N$ yields
+\[ W_N = 2.765*10^-9m = 2.765nm\]
+
+\subsection*{'Linear'-load inverter}
+This is the circuit that contains the pull-up NMOS transistor with 1.6V gate voltage. Here, the pull-up transistor
+is operating in the linear regime ($V_{DS} < V_{GS} - V_T$). This calculation allows for cancellation of many terms
+Again, we equate currents to solve,
+\[ I_{S pull-up}(linear) = I_{D}(linear)\]
+Cancelling identical terms yields,
+\[W_L ((V_{gate} - V_{OL} - V_T) V_{OL} - \frac{V_{OL}^2}{2}) = W_N ((V_{DD} - V_T) V_{OL} - \frac{V_{OL}^2}{2}) \]
+Substituting values,
+\[0.1*10^{-7} ((1.6 - 0.1 - 0.4)*0.1 - \frac{0.1^2}{2}) = W_N ((1.2 - 0.4)*0.1 - \frac{0.1^2}{2}) \]
+Solving for $W_N$ yields 
+\[ W_N = 1.4*10^{-8} = 14nm\]
+
+\subsection{Results}
+
+\pagebreak
+
+\end{document}

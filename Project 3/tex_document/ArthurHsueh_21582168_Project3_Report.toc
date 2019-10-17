@@ -1,0 +1,3 @@
+\contentsline {section}{\numberline {1}Designing widths of pull-down transistors}{1}% 
+\contentsline {subsection}{\numberline {1.1}Calculations}{1}% 
+\contentsline {subsection}{\numberline {1.2}Results}{2}% 
