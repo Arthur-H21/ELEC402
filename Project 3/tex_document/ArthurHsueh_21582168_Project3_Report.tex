@@ -405,7 +405,7 @@ we simply need to equate currents at the $V_{out}$ node. Because we are calculat
 \[V_{B} = V_{out} = V_S \quad and \quad  V_A = 0\]
 We notice that PMOS1 and PMOS2 are operating in the saturation, and NMOS4 is also operating in saturation. NMOS3 is operating in the cut-off region.
 The the currents that matter for this case are the drain currents of PMOS2 and NMOS4.
-\[I_{D-nmos4}(saturation) = I_{p-nmos2}(saturation) \]
+\[I_{D-nmos4}(saturation) = I_{D-pmos2}(saturation) \]
 Using the same equations used in section 1, cancelling identical terms and approximating yields the equation
 \[2\chi^2(V_S - V_{TN})^2 = (V_{DD} - 2V_{TP} - V_S)^2 \quad\quad where \quad \chi = \sqrt{\frac{\frac{ W_N }{E_{CN}L_N  }}{\frac{ W_P }{E_{CP}L_P  }}} \]
 Now we can solve for $V_S$
@@ -417,9 +417,9 @@ For the case of two inputs being tied together, we take similar conditions to th
 \[V_A = V_{B} = V_{out} = V_S\]
 Thus PMOS2, NMOS3 and NOMS4 are operating in saturation and PMOS1 is operating in the linear regime. The currents that matter for this case are the 
 drain currents of PMOS4 and the sum of the drain currents of NMOS3 and NMOS4.
-\[I_{D-nmos4}(saturation)+I_{D-nmos3}(saturation)= I_{p-nmos2}(saturation) \]
+\[I_{D-nmos4}(saturation)+I_{D-nmos3}(saturation)= I_{D-pmos2}(saturation) \]
 Because the NMOS transistors are the same we can just take 2 drain currents of the NMOS
-\[2*I_{D-nmos}(saturation)= I_{p-nmos2}(saturation) \]
+\[2*I_{D-nmos}(saturation)= I_{N-pmos2}(saturation) \]
 Using the same equations used in section 1, cancelling identical terms and approximating yields the equations
 \[2\chi^2(V_S - V_{TN})^2 = (\frac{V_{DD} - 3*V_S}{2} - V_{TP})^2 \quad\quad where \quad \chi = \sqrt{\frac{\frac{ W_N }{E_{CN}L_N  }}{\frac{ W_P }{E_{CP}L_P  }}} \]
 Now we can solve for $V_S$
