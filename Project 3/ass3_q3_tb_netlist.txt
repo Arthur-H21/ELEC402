@@ -1,0 +1,16 @@
+// Library name: ELEC402
+// Cell name: ass3_q3
+// View name: schematic
+subckt ass3_q3 Bulk Drain Gate Source
+    NM0 (Drain Gate Source Bulk) g45n1svt w=(800n) l=100n nf=1 as=112f \
+        ad=112f ps=1.88u pd=1.88u nrd=175m nrs=175m sa=140n sb=140n \
+        sd=160n sca=55.42636 scb=0.04134 scc=0.00529 m=(1)
+ends ass3_q3
+// End of subcircuit definition.
+
+// Library name: ELEC402
+// Cell name: ass3_q3_tb2
+// View name: schematic
+I0 (0 V0_PLUS V0_PLUS V1_PLUS) ass3_q3
+V1 (V1_PLUS 0) vsource dc=vsb type=dc
+V0 (V0_PLUS 0) vsource dc=vdd type=dc
