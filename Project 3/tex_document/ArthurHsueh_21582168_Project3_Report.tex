@@ -482,9 +482,8 @@ So instead of 1$\mu$m and 100nm lengths, I am using 120nm and 1.2$\mu$m. Below i
     \makebox[\textwidth]{\includegraphics[scale=0.65]{../images/q6_schematic.jpg}}
     \caption{Schematic for the saturated-enhancment load inverter}
 \end{figure}
-For the testbench, the typical components vpulse, vdc, and cap are used. The value of the capcitors were
-specially chosen to be $\SI{2}{fF \mu m^{-1}}$. The pulse source, vpulse, is set to alternate between values of 0 and $V_{DD}$, and its 
-rise, fall and period are defined the same was as shown in the tutorial.
+For the testbench, the typical components vdc, and cap are used. The value of the capcitors were
+specially chosen to be $\SI{2}{fF \mu m^{-1}}$. The input is set to sweep from values of 0 and $V_{DD}$.
 The testbench schematic is shown below
 \begin{figure} [H]
     \centering
@@ -492,11 +491,12 @@ The testbench schematic is shown below
     \caption{Testbench schematic for the saturated-enhancment load inverter}
 \end{figure}
 \pagebreak
-Running the simulation, the resulting waveform is shown below.
+Running the simulation, the resulting VTC plot is shown below. We also take the derivative of the output to find
+$V_{IL}$ and $V_{IH}$ where the slope is equal to -1.
 \begin{figure} [H]
     \centering
-    \makebox[\textwidth]{\includegraphics[scale=0.6]{../images/q6_tb_waveform.jpg}}
-    \caption{Simulation of the saturated-enhancement load inverter}
+    \makebox[\textwidth]{\includegraphics[scale=0.6]{../images/q6_tb_vtc_deriv.jpg}}
+    \caption{VTC of the saturated-enhancement load inverter}
 \end{figure}
 The values important for calculating noise margin are $V_{IL}$, $V_{IH}$, $V_{OL}$ and $V_{OH}$, and are noted by the selected points in the waveform.
 The values are not too clear in the image, so for clarity they are shown in the table below, with units in volts.
@@ -505,14 +505,14 @@ The values are not too clear in the image, so for clarity they are shown in the 
     \begin{tabular} {cccc} 
         $V_{IL}$ & $V_{IH}$ & $V_{OL}$ & $V_{OH}$\\
         \hline
-        0 & 1.2 & 0.023568 & 0.6639
+        0.24858 & 0.71008 & 0.03843 & 1.0236
     \end{tabular}
     \caption{Noise margin voltages from the waveform}
 \end{table}
 We use the following equations to calcaulte for noise margins.
 \[NM_L = V_{IL} - V_{OL} \quad and \quad NM_H = V_{OH} - V_{IH}\]
 Substituting the values in the table above will yield the noise margin values
-\[NM_L = \SI{-23.5681}{mV} \quad and \quad NM_H = \SI{-536.08}{mV}\]
+\[NM_L = \SI{210.15}{mV} \quad and \quad NM_H = \SI{313.52}{mV}\]
 We can attribute the large high noise margin $NM_H$ due to the large width of the pull-down NMOS transistor ($10*L$). As we learned in class, the 
 saturated-enhancement load inverter is a ratioed inverter, meaning the performance of the inverter is dependent on a ratio of specifications.
 For this inverter, this ratio is dependent on the gate widths and lengths of both transistors.
