@@ -1,0 +1,44 @@
+ // Library name: ELEC402
+// Cell name: q2_Project4
+// View name: schematic
+subckt q2_Project4 A B C D Y gnd vdd
+    PM3 (Y B PM3_S vdd) g45p1svt w=(360n) l=360n nf=1 as=50.4f ad=50.4f \
+        ps=1u pd=1u nrd=388.889m nrs=388.889m sa=140n sb=140n sd=160n \
+        sca=97.22222 scb=0.06565 scc=0.01044 m=(1)
+    A_pmos (PM3_S A vdd vdd) g45p1svt w=(360n) l=360n nf=1 as=50.4f \
+        ad=50.4f ps=1u pd=1u nrd=388.889m nrs=388.889m sa=140n sb=140n \
+        sd=160n sca=97.22222 scb=0.06565 scc=0.01044 m=(1)
+    C_pmos (Y C vdd vdd) g45p1svt w=(180n) l=180n nf=1 as=25.2f ad=25.2f \
+        ps=640n pd=640n nrd=777.778m nrs=777.778m sa=140n sb=140n sd=160n \
+        sca=165.20468 scb=0.09648 scc=0.01950 m=(1)
+    D_pmos (Y D vdd vdd) g45p1svt w=(180n) l=180n nf=1 as=25.2f ad=25.2f \
+        ps=640n pd=640n nrd=777.778m nrs=777.778m sa=140n sb=140n sd=160n \
+        sca=165.20468 scb=0.09648 scc=0.01950 m=(1)
+    D_nmos (D_nmos_D D gnd gnd) g45n1svt w=(270n) l=270n nf=1 as=37.8f \
+        ad=37.8f ps=820n pd=820n nrd=518.519m nrs=518.519m sa=140n sb=140n \
+        sd=160n sca=122.28670 scb=0.07953 scc=0.01376 m=(1)
+    C_nmos (A_nmos_S C D_nmos_D gnd) g45n1svt w=(270n) l=270n nf=1 \
+        as=37.8f ad=37.8f ps=820n pd=820n nrd=518.519m nrs=518.519m \
+        sa=140n sb=140n sd=160n sca=122.28670 scb=0.07953 scc=0.01376 \
+        m=(1)
+    B_nmos (Y B A_nmos_S gnd) g45n1svt w=(270n) l=270n nf=1 as=37.8f \
+        ad=37.8f ps=820n pd=820n nrd=518.519m nrs=518.519m sa=140n sb=140n \
+        sd=160n sca=122.28670 scb=0.07953 scc=0.01376 m=(1)
+    A_nmos (Y A A_nmos_S gnd) g45n1svt w=(270n) l=270n nf=1 as=37.8f \
+        ad=37.8f ps=820n pd=820n nrd=518.519m nrs=518.519m sa=140n sb=140n \
+        sd=160n sca=122.28670 scb=0.07953 scc=0.01376 m=(1)
+ends q2_Project4
+// End of subcircuit definition.
+
+// Library name: ELEC402
+// Cell name: q2_Project4_TB
+// View name: schematic
+I0 (V1_PLUS V2_PLUS V3_PLUS V4_PLUS I0_Y 0 V0_PLUS) q2_Project4
+C0 (I0_Y 0) capacitor c=cap
+V4 (V4_PLUS 0) vsource dc=vdd type=dc
+V3 (V3_PLUS 0) vsource dc=vdd type=dc
+V0 (V0_PLUS 0) vsource dc=vdd type=dc
+V2 (V2_PLUS 0) vsource type=pulse val0=0 val1=vdd period=1/F rise=0.01/F \
+        fall=0.01/F
+V1 (V1_PLUS 0) vsource type=pulse val0=0 val1=vdd period=1/F rise=0.01/F \
+        fall=0.01/F
